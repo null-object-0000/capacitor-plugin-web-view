@@ -11,6 +11,10 @@ npx cap sync
 
 ## Usage
 
+> 在 Android 上，wen 浏览器组件在整个网络视图下呈现，并使用该组件在滚动事件期间管理其位置。这意味着，作为开发人员，您必须确保 Web 视图在所有层到最底层都是透明的。在典型的 Ionic 应用程序中，这意味着对 IonContent 和根 HTML 标记等元素设置透明度，以确保它可以被看到。如果你在 Android 上看不到你的 web 浏览器组件，这应该是你检查的第一件事。
+
+web 浏览器组件本身没有样式，所以你应该根据页面结构的布局对其进行样式设置。因为我们将视图渲染到这个槽中，所以元素本身没有宽度或高度，所以一定要明确设置这些宽度或高度。
+
 ```html
 <div id="webView" class="capacitor-web-view"></div>
 ```
@@ -34,7 +38,7 @@ const newMap = await WebView.create({
   id: 'my-web-view', // Unique identifier for this web-view instance
   element: webViewRef, // reference to the capacitor-web-view element
   config: {
-
+    url: 'https://www.baidu.com'
   }
 });
 ```
@@ -49,6 +53,7 @@ const newMap = await WebView.create({
 </template>
 
 <script setup lang="ts">
+import { onIonViewWillEnter, onIonViewWillLeave } from '@ionic/vue';
 import { onMounted, onUnmounted, ref } from 'vue';
 import { WebView } from '@snewbie/capacitor-web-view';
 
@@ -62,10 +67,20 @@ onMounted(async () => {
         id: 'main',
         element: newWebView.value,
         config: {
-
+          url: 'https://www.baidu.com'
         } 
     });
 });
+
+onIonViewWillEnter(async () => {
+  newWebView?.show()
+  newWebView?.enableTouch()
+})
+
+onIonViewWillLeave(async () => {
+  newWebView?.hide()
+  newWebView?.disableTouch()
+})
 
 onUnmounted(() => {
   if (newWebView) {
