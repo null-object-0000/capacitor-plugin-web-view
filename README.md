@@ -1,5 +1,7 @@
 # @snewbie/capacitor-web-view
 
+<a href="https://www.npmjs.com/package/@snewbie/capacitor-web-view"><img src="https://img.shields.io/npm/v/@snewbie/capacitor-web-view.svg?sanitize=true" alt="Version"></a> <a  href="https://www.npmjs.com/package/@snewbie/capacitor-v"><img src="https://img.shields.io/npm/l/@snewbie/capacitor-web-view.svg?sanitize=true" alt="License"></a> [![Publish Capacitor Android Plugin To NPM](https://github.com/null-object-0000/capacitor-plugin-web-view/actions/workflows/capacitor-android-plugin-publish.yml/badge.svg)](https://github.com/null-object-0000/capacitor-plugin-web-view/actions/workflows/capacitor-android-plugin-publish.yml)
+
 一个 Capacitor 的 web 浏览器组件。
 
 ## Install
@@ -83,9 +85,7 @@ onIonViewWillLeave(async () => {
 })
 
 onUnmounted(() => {
-  if (newWebView) {
-    newWebView.destroy()
-  }
+  newWebView?.destroy()
 })
 </script>
 ```
