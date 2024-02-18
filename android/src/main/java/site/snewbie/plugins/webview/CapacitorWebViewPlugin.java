@@ -199,8 +199,10 @@ public class CapacitorWebViewPlugin extends Plugin {
                 throw new IllegalArgumentException("url is required");
             }
 
-            webView.getWebView().loadUrl(url);
-            call.resolve();
+            super.getActivity().runOnUiThread(() -> {
+                webView.getWebView().loadUrl(url);
+                call.resolve();
+            });
         } catch (Exception e) {
             call.reject(e.getMessage(), e);
         }
@@ -216,10 +218,12 @@ public class CapacitorWebViewPlugin extends Plugin {
                 throw new IllegalArgumentException("script is required");
             }
 
-            webView.getWebView().evaluateJavascript(script, value -> {
-                JSObject result = new JSObject();
-                result.put("value", value);
-                call.resolve(result);
+            super.getActivity().runOnUiThread(() -> {
+                webView.getWebView().evaluateJavascript(script, value -> {
+                    JSObject result = new JSObject();
+                    result.put("value", value);
+                    call.resolve(result);
+                });
             });
         } catch (Exception e) {
             call.reject(e.getMessage(), e);

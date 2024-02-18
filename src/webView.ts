@@ -100,7 +100,8 @@ export class WebView implements WebViewInterface {
     }
 
     public static async getCookie(url: string, key?: string): Promise<string> {
-        return CapacitorWebView.getCookie({ url, key });
+        const { value } = await CapacitorWebView.getCookie({ url, key });
+        return value;
     }
 
     public static async setCookie(url: string, key: string, value: string): Promise<void> {

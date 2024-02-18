@@ -48,6 +48,11 @@ public class CapacitorWebView {
             try {
                 this.webView = new WebView(delegate.getContext());
                 this.webView.getSettings().setJavaScriptEnabled(true);
+                this.webView.getSettings().setDomStorageEnabled(true);
+                this.webView.getSettings().setGeolocationEnabled(true);
+                this.webView.getSettings().setDatabaseEnabled(true);
+                this.webView.getSettings().setMediaPlaybackRequiresUserGesture(false);
+                this.webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
                 this.webView.setWebViewClient(new WebViewClient() {
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
