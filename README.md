@@ -96,6 +96,7 @@ onUnmounted(() => {
 
 * [`getCookie(...)`](#getcookie)
 * [`setCookie(...)`](#setcookie)
+* [`removeAllCookies()`](#removeallcookies)
 * [`create(...)`](#create)
 * [`loadUrl(...)`](#loadurl)
 * [`evaluateJavascript(...)`](#evaluatejavascript)
@@ -150,6 +151,19 @@ setCookie(url: string, key: string, value: string) => Promise<void>
 | **`value`** | <code>string</code> | 要设置的 cookie 的值。    |
 
 **Since:** 0.0.1
+
+--------------------
+
+
+### removeAllCookies()
+
+```typescript
+removeAllCookies() => Promise<void>
+```
+
+移除所有 cookie。
+
+**Since:** 0.0.2
 
 --------------------
 

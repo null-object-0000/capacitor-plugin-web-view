@@ -8,6 +8,7 @@ import { CapacitorWebView } from './implementation';
 export interface WebViewInterface {
     /**
      * 获取指定 url 的 cookie。
+     * @function WebView.getCookie
      * @param url  要获取 cookie 的 url。
      * @param key  要获取的 cookie 的 key。如果不指定，则返回所有 cookie。
      * @since 0.0.1
@@ -15,12 +16,19 @@ export interface WebViewInterface {
     getCookie(url: string, key?: string): Promise<string>;
     /**
      * 设置指定 url 的 cookie。
+     * @function WebView.setCookie
      * @param url 要设置 cookie 的 url。
      * @param key 要设置的 cookie 的 key。
      * @param value 要设置的 cookie 的值。
      * @since 0.0.1
      */
     setCookie(url: string, key: string, value: string): Promise<void>;
+    /**
+     * 移除所有 cookie。
+     * @function WebView.removeAllCookies
+     * @since 0.0.2
+     */
+    removeAllCookies(): Promise<void>;
 
     /**
      * 创建 web 浏览器实例。
@@ -106,6 +114,10 @@ export class WebView implements WebViewInterface {
 
     public static async setCookie(url: string, key: string, value: string): Promise<void> {
         return CapacitorWebView.setCookie({ url, key, value });
+    }
+
+    public static async removeAllCookies(): Promise<void> {
+        return CapacitorWebView.removeAllCookies();
     }
 
     public static async create(options: CreateWebViewArgs, callback?: WebViewListenerCallback<WebViewReadyCallbackData>): Promise<WebView> {
@@ -254,6 +266,13 @@ export class WebView implements WebViewInterface {
      * @deprecated Use WebView.setCookie instead.
      */
     public setCookie(_url: string, _key: string, _value: string): Promise<void> {
+        throw new Error('Method not implemented.');
+    }
+
+    /**
+     * @deprecated Use WebView.removeAllCookies instead.
+     */
+    public removeAllCookies(): Promise<void> {
         throw new Error('Method not implemented.');
     }
 

@@ -1,6 +1,6 @@
 {
   "name": "@snewbie/capacitor-web-view",
-  "version": "0.0.3",
+  "version": "0.0.2",
   "description": "一个 Capacitor 的 web 浏览器组件。",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",

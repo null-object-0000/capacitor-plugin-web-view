@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.webkit.CookieManager;
+import android.webkit.ValueCallback;
 
 import androidx.annotation.NonNull;
 
@@ -152,6 +153,12 @@ public class CapacitorWebViewPlugin extends Plugin {
         }
 
         CookieManager.getInstance().setCookie(url, key + "=" + value);
+        call.resolve();
+    }
+
+    @PluginMethod
+    public void removeAllCookies(PluginCall call) {
+        CookieManager.getInstance().removeAllCookies(null);
         call.resolve();
     }
 

@@ -40,6 +40,7 @@ export interface WebViewBoundsArgs {
 export interface WebViewPlugin extends Plugin {
     getCookie(args: { url: string; key: string | undefined; }): Promise<{ value: string }>;
     setCookie(args: { url: string; key: string; value: string; }): Promise<void>;
+    removeAllCookies(): Promise<void>;
     create(options: CreateWebViewArgs): Promise<void>;
     loadUrl(args: { id: string; url: string; }): Promise<void>;
     evaluateJavascript(args: { id: string; script: string; }): Promise<any>;
