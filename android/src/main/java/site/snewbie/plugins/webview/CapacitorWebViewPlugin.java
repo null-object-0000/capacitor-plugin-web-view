@@ -163,6 +163,12 @@ public class CapacitorWebViewPlugin extends Plugin {
     }
 
     @PluginMethod
+    public void hasCookies(PluginCall call) {
+        boolean hasCookies = CookieManager.getInstance().hasCookies();
+        call.resolve(new JSObject().put("value", hasCookies));
+    }
+
+    @PluginMethod
     public void create(PluginCall call) {
         try {
             String id = call.getString("id");

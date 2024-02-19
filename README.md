@@ -97,6 +97,7 @@ onUnmounted(() => {
 * [`getCookie(...)`](#getcookie)
 * [`setCookie(...)`](#setcookie)
 * [`removeAllCookies()`](#removeallcookies)
+* [`hasCookies()`](#hascookies)
 * [`create(...)`](#create)
 * [`loadUrl(...)`](#loadurl)
 * [`evaluateJavascript(...)`](#evaluatejavascript)
@@ -162,6 +163,21 @@ removeAllCookies() => Promise<void>
 ```
 
 移除所有 cookie。
+
+**Since:** 0.0.2
+
+--------------------
+
+
+### hasCookies()
+
+```typescript
+hasCookies() => Promise<boolean>
+```
+
+检查是否存在 cookie。
+
+**Returns:** <code>Promise&lt;boolean&gt;</code>
 
 **Since:** 0.0.2
 

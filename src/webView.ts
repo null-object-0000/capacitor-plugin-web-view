@@ -29,6 +29,12 @@ export interface WebViewInterface {
      * @since 0.0.2
      */
     removeAllCookies(): Promise<void>;
+    /**
+     * 检查是否存在 cookie。
+     * @function WebView.hasCookies
+     * @since 0.0.2
+     */
+    hasCookies(): Promise<boolean>;
 
     /**
      * 创建 web 浏览器实例。
@@ -118,6 +124,11 @@ export class WebView implements WebViewInterface {
 
     public static async removeAllCookies(): Promise<void> {
         return CapacitorWebView.removeAllCookies();
+    }
+
+    public static async hasCookies(): Promise<boolean> {
+        const { value } = await CapacitorWebView.hasCookies();
+        return value;
     }
 
     public static async create(options: CreateWebViewArgs, callback?: WebViewListenerCallback<WebViewReadyCallbackData>): Promise<WebView> {
@@ -273,6 +284,13 @@ export class WebView implements WebViewInterface {
      * @deprecated Use WebView.removeAllCookies instead.
      */
     public removeAllCookies(): Promise<void> {
+        throw new Error('Method not implemented.');
+    }
+
+    /**
+     * @deprecated Use WebView.hasCookies instead.
+     */
+    public hasCookies(): Promise<boolean> {
         throw new Error('Method not implemented.');
     }
 
