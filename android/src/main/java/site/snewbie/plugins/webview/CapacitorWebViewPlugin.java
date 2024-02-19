@@ -256,7 +256,7 @@ public class CapacitorWebViewPlugin extends Plugin {
                 throw new IllegalArgumentException("webView not found");
             }
 
-            removedWebView.getWebView().destroy();
+            super.getActivity().runOnUiThread(() -> removedWebView.getWebView().destroy());
             call.resolve();
         } catch (Exception e) {
             call.reject(e.getMessage(), e);
