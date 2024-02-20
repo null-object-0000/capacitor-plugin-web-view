@@ -233,6 +233,11 @@ public class CapacitorWebViewPlugin extends Plugin {
 
             super.getActivity().runOnUiThread(() -> {
                 webView.getWebView().evaluateJavascript(script, value -> {
+                    if (value == null) {
+                        call.resolve();
+                        return;
+                    }
+
                     JSObject result = new JSObject();
                     result.put("value", value);
                     call.resolve(result);

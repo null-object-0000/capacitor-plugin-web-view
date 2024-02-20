@@ -224,7 +224,7 @@ loadUrl(url: string) => Promise<void>
 ### evaluateJavascript(...)
 
 ```typescript
-evaluateJavascript(script: string) => Promise<any>
+evaluateJavascript(script: string) => Promise<string | null>
 ```
 
 执行指定的 JavaScript 代码。
@@ -233,7 +233,7 @@ evaluateJavascript(script: string) => Promise<any>
 | ------------ | ------------------- |
 | **`script`** | <code>string</code> |
 
-**Returns:** <code>Promise&lt;any&gt;</code>
+**Returns:** <code>Promise&lt;string | null&gt;</code>
 
 **Since:** 0.0.1
 

@@ -52,7 +52,7 @@ export interface WebViewInterface {
      * 执行指定的 JavaScript 代码。
      * @since 0.0.1
      */
-    evaluateJavascript(script: string): Promise<any>;
+    evaluateJavascript(script: string): Promise<string | null>;
 
     /**
      * 销毁 web 浏览器实例。
@@ -305,8 +305,9 @@ export class WebView implements WebViewInterface {
         return CapacitorWebView.loadUrl({ id: this.id, url });
     }
 
-    public evaluateJavascript(script: string): Promise<any> {
-        return CapacitorWebView.evaluateJavascript({ id: this.id, script });
+    public async evaluateJavascript(script: string): Promise<string | null> {
+        const { value } = await CapacitorWebView.evaluateJavascript({ id: this.id, script });
+        return value;
     }
 
     public async destroy(): Promise<void> {

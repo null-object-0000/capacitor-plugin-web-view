@@ -44,7 +44,7 @@ export interface WebViewPlugin extends Plugin {
     hasCookies(): Promise<{ value: boolean }>;
     create(options: CreateWebViewArgs): Promise<void>;
     loadUrl(args: { id: string; url: string; }): Promise<void>;
-    evaluateJavascript(args: { id: string; script: string; }): Promise<any>;
+    evaluateJavascript(args: { id: string; script: string; }): Promise<{ value: string | null }>;
     destroy(args: { id: string }): Promise<void>;
     show(args: { id: string; }): Promise<void>;
     hide(args: { id: string; }): Promise<void>;
