@@ -8,6 +8,7 @@ import { CapacitorWebView } from './implementation';
 export interface WebViewInterface {
     /**
      * 获取指定 url 的 cookie。
+     * @function WebView.getCookie
      * @param url  要获取 cookie 的 url。
      * @param key  要获取的 cookie 的 key。如果不指定，则返回所有 cookie。
      * @since 0.0.1
@@ -15,12 +16,25 @@ export interface WebViewInterface {
     getCookie(url: string, key?: string): Promise<string>;
     /**
      * 设置指定 url 的 cookie。
+     * @function WebView.setCookie
      * @param url 要设置 cookie 的 url。
      * @param key 要设置的 cookie 的 key。
      * @param value 要设置的 cookie 的值。
      * @since 0.0.1
      */
     setCookie(url: string, key: string, value: string): Promise<void>;
+    /**
+     * 移除所有 cookie。
+     * @function WebView.removeAllCookies
+     * @since 0.0.2
+     */
+    removeAllCookies(): Promise<void>;
+    /**
+     * 检查是否存在 cookie。
+     * @function WebView.hasCookies
+     * @since 0.0.2
+     */
+    hasCookies(): Promise<boolean>;
 
     /**
      * 创建 web 浏览器实例。
@@ -38,7 +52,7 @@ export interface WebViewInterface {
      * 执行指定的 JavaScript 代码。
      * @since 0.0.1
      */
-    evaluateJavascript(script: string): Promise<any>;
+    evaluateJavascript(script: string): Promise<string | null>;
 
     /**
      * 销毁 web 浏览器实例。
@@ -100,11 +114,21 @@ export class WebView implements WebViewInterface {
     }
 
     public static async getCookie(url: string, key?: string): Promise<string> {
-        return CapacitorWebView.getCookie({ url, key });
+        const { value } = await CapacitorWebView.getCookie({ url, key });
+        return value;
     }
 
     public static async setCookie(url: string, key: string, value: string): Promise<void> {
         return CapacitorWebView.setCookie({ url, key, value });
+    }
+
+    public static async removeAllCookies(): Promise<void> {
+        return CapacitorWebView.removeAllCookies();
+    }
+
+    public static async hasCookies(): Promise<boolean> {
+        const { value } = await CapacitorWebView.hasCookies();
+        return value;
     }
 
     public static async create(options: CreateWebViewArgs, callback?: WebViewListenerCallback<WebViewReadyCallbackData>): Promise<WebView> {
@@ -257,6 +281,20 @@ export class WebView implements WebViewInterface {
     }
 
     /**
+     * @deprecated Use WebView.removeAllCookies instead.
+     */
+    public removeAllCookies(): Promise<void> {
+        throw new Error('Method not implemented.');
+    }
+
+    /**
+     * @deprecated Use WebView.hasCookies instead.
+     */
+    public hasCookies(): Promise<boolean> {
+        throw new Error('Method not implemented.');
+    }
+
+    /**
      * @deprecated Use WebView.create instead.
      */
     public create(_options: CreateWebViewArgs, _callback?: WebViewListenerCallback<WebViewReadyCallbackData>): Promise<WebView> {
@@ -267,8 +305,9 @@ export class WebView implements WebViewInterface {
         return CapacitorWebView.loadUrl({ id: this.id, url });
     }
 
-    public evaluateJavascript(script: string): Promise<any> {
-        return CapacitorWebView.evaluateJavascript({ id: this.id, script });
+    public async evaluateJavascript(script: string): Promise<string | null> {
+        const { value } = await CapacitorWebView.evaluateJavascript({ id: this.id, script });
+        return value;
     }
 
     public async destroy(): Promise<void> {

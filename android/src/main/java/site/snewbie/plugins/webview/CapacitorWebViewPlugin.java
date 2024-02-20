@@ -5,6 +5,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.view.MotionEvent;
 import android.webkit.CookieManager;
+import android.webkit.ValueCallback;
 
 import androidx.annotation.NonNull;
 
@@ -156,6 +157,18 @@ public class CapacitorWebViewPlugin extends Plugin {
     }
 
     @PluginMethod
+    public void removeAllCookies(PluginCall call) {
+        CookieManager.getInstance().removeAllCookies(null);
+        call.resolve();
+    }
+
+    @PluginMethod
+    public void hasCookies(PluginCall call) {
+        boolean hasCookies = CookieManager.getInstance().hasCookies();
+        call.resolve(new JSObject().put("value", hasCookies));
+    }
+
+    @PluginMethod
     public void create(PluginCall call) {
         try {
             String id = call.getString("id");
@@ -199,8 +212,10 @@ public class CapacitorWebViewPlugin extends Plugin {
                 throw new IllegalArgumentException("url is required");
             }
 
-            webView.getWebView().loadUrl(url);
-            call.resolve();
+            super.getActivity().runOnUiThread(() -> {
+                webView.getWebView().loadUrl(url);
+                call.resolve();
+            });
         } catch (Exception e) {
             call.reject(e.getMessage(), e);
         }
@@ -216,10 +231,17 @@ public class CapacitorWebViewPlugin extends Plugin {
                 throw new IllegalArgumentException("script is required");
             }
 
-            webView.getWebView().evaluateJavascript(script, value -> {
-                JSObject result = new JSObject();
-                result.put("value", value);
-                call.resolve(result);
+            super.getActivity().runOnUiThread(() -> {
+                webView.getWebView().evaluateJavascript(script, value -> {
+                    if (value == null) {
+                        call.resolve();
+                        return;
+                    }
+
+                    JSObject result = new JSObject();
+                    result.put("value", value);
+                    call.resolve(result);
+                });
             });
         } catch (Exception e) {
             call.reject(e.getMessage(), e);
@@ -239,7 +261,7 @@ public class CapacitorWebViewPlugin extends Plugin {
                 throw new IllegalArgumentException("webView not found");
             }
 
-            removedWebView.getWebView().destroy();
+            super.getActivity().runOnUiThread(() -> removedWebView.getWebView().destroy());
             call.resolve();
         } catch (Exception e) {
             call.reject(e.getMessage(), e);
