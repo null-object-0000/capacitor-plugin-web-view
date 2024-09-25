@@ -118,6 +118,10 @@ public class CapacitorWebViewPlugin extends Plugin {
         }
 
         String cookie = CookieManager.getInstance().getCookie(url);
+        if (StrUtil.isBlank(key)) {
+            call.resolve(new JSObject().put("value", null));
+            return;
+        }
 
         String key = call.getString("key");
         if (StrUtil.isBlank(key)) {
